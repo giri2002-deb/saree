@@ -1,0 +1,186 @@
+{
+  "sarees": [
+    {
+      "id": "1",
+      "name": "Royal Blue Banarasi Silk",
+      "category": "Party",
+      "price": 8999,
+      "originalPrice": 12999,
+      "image": "/placeholder.svg?height=600&width=400&text=Royal+Blue+Banarasi",
+      "images": [
+        "/placeholder.svg?height=600&width=400&text=Royal+Blue+Banarasi+1",
+        "/placeholder.svg?height=600&width=400&text=Royal+Blue+Banarasi+2",
+        "/placeholder.svg?height=600&width=400&text=Royal+Blue+Banarasi+3"
+      ],
+      "description": "Exquisite royal blue Banarasi silk saree with intricate gold zari work. Perfect for weddings and special occasions.",
+      "features": ["Pure Silk", "Zari Work", "Traditional", "Handwoven"],
+      "isNew": true,
+      "isFeatured": true,
+      "rating": 4.8
+    },
+    {
+      "id": "2",
+      "name": "Elegant Red Cotton Saree",
+      "category": "Daily",
+      "price": 2999,
+      "originalPrice": 4999,
+      "image": "/placeholder.svg?height=600&width=400&text=Red+Cotton",
+      "images": [
+        "/placeholder.svg?height=600&width=400&text=Red+Cotton+1",
+        "/placeholder.svg?height=600&width=400&text=Red+Cotton+2"
+      ],
+      "description": "Beautiful red cotton saree perfect for daily wear and casual occasions.",
+      "features": ["Pure Cotton", "Comfortable", "Daily Wear", "Easy Care"],
+      "isNew": true,
+      "isFeatured": false,
+      "rating": 4.5
+    },
+    {
+      "id": "3",
+      "name": "Designer Silk Wedding Saree",
+      "category": "Wedding",
+      "price": 15999,
+      "originalPrice": 22999,
+      "image": "/placeholder.svg?height=600&width=400&text=Designer+Wedding",
+      "images": [
+        "/placeholder.svg?height=600&width=400&text=Designer+Wedding+1",
+        "/placeholder.svg?height=600&width=400&text=Designer+Wedding+2",
+        "/placeholder.svg?height=600&width=400&text=Designer+Wedding+3"
+      ],
+      "description": "Luxurious designer silk saree with contemporary patterns and rich embellishments.",
+      "features": ["Designer", "Silk", "Embellished", "Contemporary"],
+      "isNew": true,
+      "isFeatured": true,
+      "rating": 4.9
+    },
+    {
+      "id": "4",
+      "name": "Traditional Handloom Cotton",
+      "category": "Daily",
+      "price": 3999,
+      "originalPrice": 5999,
+      "image": "/placeholder.svg?height=600&width=400&text=Handloom+Cotton",
+      "images": [
+        "/placeholder.svg?height=600&width=400&text=Handloom+Cotton+1",
+        "/placeholder.svg?height=600&width=400&text=Handloom+Cotton+2"
+      ],
+      "description": "Authentic handloom cotton saree with traditional weaving techniques.",
+      "features": ["Handloom", "Cotton", "Traditional", "Eco-friendly"],
+      "isNew": false,
+      "isFeatured": true,
+      "rating": 4.6
+    },
+    {
+      "id": "5",
+      "name": "Golden Silk Party Wear",
+      "category": "Party",
+      "price": 12999,
+      "originalPrice": 18999,
+      "image": "/placeholder.svg?height=600&width=400&text=Golden+Silk",
+      "images": [
+        "/placeholder.svg?height=600&width=400&text=Golden+Silk+1",
+        "/placeholder.svg?height=600&width=400&text=Golden+Silk+2"
+      ],
+      "description": "Stunning golden silk saree perfect for parties and celebrations.",
+      "features": ["Pure Silk", "Party Wear", "Golden", "Elegant"],
+      "isNew": true,
+      "isFeatured": false,
+      "rating": 4.7
+    },
+    {
+      "id": "6",
+      "name": "Classic Banarasi Wedding",
+      "category": "Wedding",
+      "price": 18999,
+      "originalPrice": 25999,
+      "image": "/placeholder.svg?height=600&width=400&text=Classic+Banarasi",
+      "images": [
+        "/placeholder.svg?height=600&width=400&text=Classic+Banarasi+1",
+        "/placeholder.svg?height=600&width=400&text=Classic+Banarasi+2"
+      ],
+      "description": "Classic Banarasi saree with traditional motifs and rich gold work.",
+      "features": ["Banarasi", "Wedding", "Traditional", "Gold Work"],
+      "isNew": false,
+      "isFeatured": true,
+      "rating": 4.8
+    },
+    {
+      "id": "7",
+      "name": "Modern Designer Fusion",
+      "category": "Party",
+      "price": 9999,
+      "originalPrice": 14999,
+      "image": "/placeholder.svg?height=600&width=400&text=Modern+Designer",
+      "images": [
+        "/placeholder.svg?height=600&width=400&text=Modern+Designer+1",
+        "/placeholder.svg?height=600&width=400&text=Modern+Designer+2"
+      ],
+      "description": "Contemporary designer saree with modern fusion elements.",
+      "features": ["Designer", "Modern", "Fusion", "Contemporary"],
+      "isNew": true,
+      "isFeatured": false,
+      "rating": 4.4
+    },
+    {
+      "id": "8",
+      "name": "Premium Silk Collection",
+      "category": "Silk",
+      "price": 7999,
+      "originalPrice": 11999,
+      "image": "/placeholder.svg?height=600&width=400&text=Premium+Silk",
+      "images": [
+        "/placeholder.svg?height=600&width=400&text=Premium+Silk+1",
+        "/placeholder.svg?height=600&width=400&text=Premium+Silk+2"
+      ],
+      "description": "Premium quality silk saree with elegant draping and rich texture.",
+      "features": ["Premium Silk", "Elegant", "Rich Texture", "Quality"],
+      "isNew": false,
+      "isFeatured": false,
+      "rating": 4.5
+    }
+  ],
+  "categories": [
+    {
+      "id": "wedding",
+      "name": "Wedding",
+      "image": "/placeholder.svg?height=300&width=300&text=Wedding+Category",
+      "description": "Beautiful wedding sarees for your special day"
+    },
+    {
+      "id": "party",
+      "name": "Party",
+      "image": "/placeholder.svg?height=300&width=300&text=Party+Category",
+      "description": "Elegant party wear sarees"
+    },
+    {
+      "id": "daily",
+      "name": "Daily",
+      "image": "/placeholder.svg?height=300&width=300&text=Daily+Category",
+      "description": "Comfortable daily wear sarees"
+    },
+    {
+      "id": "silk",
+      "name": "Silk",
+      "image": "/placeholder.svg?height=300&width=300&text=Silk+Category",
+      "description": "Luxurious silk sarees for graceful occasions"
+    },
+    {
+      "id": "cotton",
+      "name": "Cotton",
+      "image": "/placeholder.svg?height=300&width=300&text=Cotton+Category",
+      "description": "Light and breathable cotton sarees"
+    },
+    {
+      "id": "georgette",
+      "name": "Georgette",
+      "image": "/placeholder.svg?height=300&width=300&text=Georgette+Category",
+      "description": "Flowy georgette sarees with soft textures"
+    },
+    {
+      "id": "chiffon",
+      "name": "Chiffon",
+      "image": "/placeholder.svg?height=300&width=300&text=Chiffon+Category",
+      "description": "Lightweight chiffon sarees for a modern look"
+    }
+  ]
+}
