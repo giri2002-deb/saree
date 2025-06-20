@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Navbar } from "@/components/navbar"
-import Footer from "@/components/footer"
+import Footer from "@/components/Footer"
 import { ProductGrid } from "@/components/product-grid"
 import { ProductFilters } from "@/components/product-filters"
 import { products } from "@/lib/mock-data"

@@ -8,7 +8,7 @@ import { DiscountSection } from "@/components/discount-section"
 import { ShopByCategory } from "@/components/shop-by-category"
 import { FeaturedCollection } from "@/components/featured-collection"
 import { BlogSection } from "@/components/blog-section"
-import Footer from "@/components/footer"
+import Footer from "@/components/Footer"
 
 const pageVariants = {
   initial: { opacity: 0, y: 20 },

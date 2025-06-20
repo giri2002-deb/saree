@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import { useParams } from "next/navigation"
 import { Navbar } from "@/components/navbar"
-import Footer from "@/components/footer"
+import Footer from "@/components/Footer"
 import { ProductGrid } from "@/components/product-grid"
 import sareeData from "@/data/sarees.json"
 

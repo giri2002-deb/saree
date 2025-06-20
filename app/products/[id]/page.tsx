@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { useParams } from "next/navigation"
 import { Navbar } from "@/components/navbar"
-import Footer from "@/components/footer"
+import Footer from "@/components/Footer"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Heart, ShoppingCart, Star, Minus, Plus } from "lucide-react"
