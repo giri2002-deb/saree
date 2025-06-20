@@ -5,11 +5,13 @@ export interface Product {
   price: number
   originalPrice?: number
   rating: number
+  image: string
   images: string[]
   description: string
   features: string[]
-  tags: string[]
+  tags?: string[]
   isNew: boolean
+  isFeatured?: boolean
 }
 
 const imagePool = [
@@ -36,6 +38,7 @@ export const products: Product[] = [
     price: 299,
     originalPrice: 399,
     rating: 4.8,
+    image: getRotatingImages(0, 4)[0],
     images: getRotatingImages(0, 4),
     description:
       "Exquisite royal silk saree perfect for weddings and special occasions. Features intricate gold embroidery and traditional motifs.",
@@ -55,6 +58,7 @@ export const products: Product[] = [
     category: "Georgette Sarees",
     price: 149,
     rating: 4.5,
+    image: getRotatingImages(1, 3)[0],
     images: getRotatingImages(1, 3),
     description:
       "Flowing georgette saree with contemporary design, perfect for evening parties and celebrations.",
@@ -74,6 +78,7 @@ export const products: Product[] = [
     category: "Cotton Sarees",
     price: 79,
     rating: 4.3,
+    image: getRotatingImages(2, 2)[0],
     images: getRotatingImages(2, 2),
     description:
       "Comfortable cotton saree for everyday wear. Breathable fabric with beautiful prints.",
@@ -94,6 +99,7 @@ export const products: Product[] = [
     price: 199,
     originalPrice: 249,
     rating: 4.6,
+    image: getRotatingImages(3, 3)[0],
     images: getRotatingImages(3, 3),
     description:
       "Luxurious chiffon saree with designer patterns and elegant draping. Perfect for cocktail parties and formal events.",
@@ -113,6 +119,7 @@ export const products: Product[] = [
     category: "Wedding Sarees",
     price: 449,
     rating: 4.9,
+    image: getRotatingImages(4, 4)[0],
     images: getRotatingImages(4, 4),
     description:
       "Authentic Banarasi silk saree with traditional weaving patterns. A timeless piece for weddings and festivals.",
@@ -132,6 +139,7 @@ export const products: Product[] = [
     category: "Cotton Sarees",
     price: 89,
     rating: 4.2,
+    image: getRotatingImages(0, 2)[0],
     images: getRotatingImages(0, 2),
     description:
       "Contemporary printed cotton saree with modern designs. Perfect for office wear and casual outings.",
@@ -151,6 +159,7 @@ export const products: Product[] = [
     category: "Silk Sarees",
     price: 179,
     rating: 4.4,
+    image: getRotatingImages(1, 3)[0],
     images: getRotatingImages(1, 3),
     description:
       "Beautiful silk blend saree perfect for festivals and celebrations. Features vibrant colors and traditional motifs.",
@@ -171,6 +180,7 @@ export const products: Product[] = [
     price: 259,
     originalPrice: 299,
     rating: 4.7,
+    image: getRotatingImages(2, 3)[0],
     images: getRotatingImages(2, 3),
     description:
       "Sophisticated organza saree with subtle shimmer. Perfect for evening events and formal occasions.",
