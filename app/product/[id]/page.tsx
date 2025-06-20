@@ -16,6 +16,13 @@ const pageVariants = {
   out: { opacity: 0, y: -20 },
 }
 
+// Generate static params for static export
+export async function generateStaticParams() {
+  return sareeData.sarees.map((saree) => ({
+    id: saree.id,
+  }))
+}
+
 export default function ProductDetailPage() {
   const params = useParams()
   const productId = params.id as string

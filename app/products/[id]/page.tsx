@@ -9,6 +9,14 @@ import { Badge } from "@/components/ui/badge"
 import { Heart, ShoppingCart, Star, Minus, Plus } from "lucide-react"
 import { products } from "@/lib/mock-data"
 import { useCart } from "@/hooks/use-cart"
+import sareeData from "@/data/sarees.json"
+
+// Generate static params for static export
+export async function generateStaticParams() {
+  return sareeData.sarees.map((saree) => ({
+    id: saree.id,
+  }))
+}
 
 export default function ProductDetailPage() {
   const params = useParams()

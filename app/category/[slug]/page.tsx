@@ -7,6 +7,13 @@ import Footer from "@/components/Footer"
 import { ProductGrid } from "@/components/product-grid"
 import sareeData from "@/data/sarees.json"
 
+// Generate static params for static export
+export async function generateStaticParams() {
+  return sareeData.categories.map((category) => ({
+    slug: category.id,
+  }))
+}
+
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
   in: { opacity: 1, y: 0 },
@@ -18,7 +25,7 @@ export default function CategoryPage() {
   const categorySlug = params.slug as string
 
   const category = sareeData.categories.find((cat) => cat.id === categorySlug)
-  const categoryProducts = sareeData.sarees.filter((saree) => saree.category === categorySlug)
+  const products = sareeData.sarees.filter((saree) => saree.category.toLowerCase() === categorySlug)
 
   if (!category) {
     return (
@@ -58,7 +65,7 @@ export default function CategoryPage() {
               className="text-center"
             >
               <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-4">{category.name}</h1>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto">{category.description}</p>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">{category.description}</p>
             </motion.div>
           </div>
         </section>
@@ -85,19 +92,19 @@ export default function CategoryPage() {
         <section className="py-16">
           <div className="container mx-auto px-4">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
             >
               <div className="mb-8">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">{category.name} Collection</h2>
                 <p className="text-gray-600">
-                  Showing {categoryProducts.length} products in {category.name}
+                  Showing {products.length} products in {category.name}
                 </p>
               </div>
 
-              {categoryProducts.length > 0 ? (
-                <ProductGrid products={categoryProducts} />
+              {products.length > 0 ? (
+                <ProductGrid products={products} />
               ) : (
                 <div className="text-center py-16">
                   <h3 className="text-xl font-semibold text-gray-900 mb-2">No products found</h3>
