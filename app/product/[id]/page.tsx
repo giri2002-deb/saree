@@ -4,7 +4,7 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useParams } from "next/navigation"
 import { Heart, ShoppingCart, Star, Minus, Plus, Share2 } from "lucide-react"
-import Navbar from "@/components/Navbar"
+import { Navbar } from "@/components/navbar"
 import Footer from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -18,7 +18,7 @@ const pageVariants = {
 
 export default function ProductDetailPage() {
   const params = useParams()
-  const productId = Number.parseInt(params.id as string)
+  const productId = params.id as string
   const [selectedImage, setSelectedImage] = useState(0)
   const [quantity, setQuantity] = useState(1)
   const [isWishlisted, setIsWishlisted] = useState(false)
@@ -137,7 +137,7 @@ export default function ProductDetailPage() {
                     ))}
                   </div>
                   <span className="text-gray-600">
-                    {product.rating} ({product.reviews} reviews)
+                    {product.rating} (Based on customer reviews)
                   </span>
                 </div>
               </div>
@@ -156,36 +156,30 @@ export default function ProductDetailPage() {
               {/* Product Details */}
               <div className="grid grid-cols-2 gap-6 py-6 border-y border-gray-200">
                 <div>
-                  <span className="font-semibold text-gray-900">Fabric:</span>
-                  <span className="ml-2 text-gray-600">{product.fabric}</span>
-                </div>
-                <div>
-                  <span className="font-semibold text-gray-900">Work:</span>
-                  <span className="ml-2 text-gray-600">{product.work}</span>
-                </div>
-                <div>
-                  <span className="font-semibold text-gray-900">Occasion:</span>
-                  <span className="ml-2 text-gray-600">{product.occasion}</span>
-                </div>
-                <div>
                   <span className="font-semibold text-gray-900">Category:</span>
                   <span className="ml-2 text-gray-600 capitalize">{product.category}</span>
                 </div>
+                <div>
+                  <span className="font-semibold text-gray-900">Status:</span>
+                  <span className="ml-2 text-gray-600">
+                    {product.isNew ? "New Arrival" : "Regular"}
+                  </span>
+                </div>
               </div>
 
-              {/* Tags */}
+              {/* Features */}
               <div>
-                <h3 className="font-semibold text-gray-900 mb-3">Tags:</h3>
+                <h3 className="font-semibold text-gray-900 mb-3">Features:</h3>
                 <div className="flex flex-wrap gap-2">
-                  {product.tags.map((tag, index) => (
+                  {product.features.map((feature, index) => (
                     <motion.span
-                      key={tag}
+                      key={feature}
                       initial={{ opacity: 0, scale: 0 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: index * 0.1 }}
                       className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm"
                     >
-                      {tag}
+                      {feature}
                     </motion.span>
                   ))}
                 </div>
@@ -198,102 +192,86 @@ export default function ProductDetailPage() {
                   <div className="flex items-center border border-gray-300 rounded-lg">
                     <Button
                       variant="ghost"
-                      size="icon"
+                      size="sm"
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      disabled={quantity <= 1}
+                      className="p-2"
                     >
                       <Minus className="h-4 w-4" />
                     </Button>
-                    <span className="px-4 py-2 font-semibold min-w-[3rem] text-center">{quantity}</span>
-                    <Button variant="ghost" size="icon" onClick={() => setQuantity(quantity + 1)}>
+                    <span className="px-4 py-2 min-w-[60px] text-center">{quantity}</span>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setQuantity(quantity + 1)}
+                      className="p-2"
+                    >
                       <Plus className="h-4 w-4" />
                     </Button>
                   </div>
                 </div>
 
-                <div className="flex space-x-4">
-                  <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="flex-1">
-                    <Button size="lg" className="w-full bg-red-600 hover:bg-red-700 text-white rounded-full">
-                      <ShoppingCart className="h-5 w-5 mr-2" />
-                      Add to Cart
-                    </Button>
-                  </motion.div>
-
-                  <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                    <Button
-                      variant="outline"
-                      size="lg"
-                      onClick={() => setIsWishlisted(!isWishlisted)}
-                      className="rounded-full"
-                    >
-                      <Heart className={`h-5 w-5 ${isWishlisted ? "fill-red-500 text-red-500" : "text-gray-600"}`} />
-                    </Button>
-                  </motion.div>
-
-                  <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                    <Button variant="outline" size="lg" className="rounded-full">
-                      <Share2 className="h-5 w-5" />
-                    </Button>
-                  </motion.div>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Button className="flex-1 bg-red-600 hover:bg-red-700 text-white py-3 text-lg font-semibold">
+                    <ShoppingCart className="mr-2 h-5 w-5" />
+                    Add to Cart
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => setIsWishlisted(!isWishlisted)}
+                    className={`flex-1 py-3 text-lg font-semibold ${
+                      isWishlisted ? "bg-red-50 border-red-200 text-red-600" : ""
+                    }`}
+                  >
+                    <Heart className={`mr-2 h-5 w-5 ${isWishlisted ? "fill-current" : ""}`} />
+                    {isWishlisted ? "Wishlisted" : "Wishlist"}
+                  </Button>
+                  <Button variant="outline" size="icon" className="p-3">
+                    <Share2 className="h-5 w-5" />
+                  </Button>
                 </div>
-
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="w-full rounded-full border-red-600 text-red-600 hover:bg-red-50"
-                >
-                  Buy Now
-                </Button>
               </div>
             </motion.div>
           </div>
 
           {/* Related Products */}
           {relatedProducts.length > 0 && (
-            <motion.section
+            <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
               className="mt-24"
             >
-              <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">Related Products</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                {relatedProducts.map((relatedProduct, index) => (
-                  <motion.a
+              <h2 className="text-3xl font-bold text-gray-900 mb-8">Related Products</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {relatedProducts.map((relatedProduct) => (
+                  <motion.div
                     key={relatedProduct.id}
-                    href={`/product/${relatedProduct.id}`}
-                    className="group"
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
                     whileHover={{ y: -5 }}
+                    className="group cursor-pointer"
                   >
-                    <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-                      <div className="aspect-[3/4] relative overflow-hidden">
-                        <img
-                          src={relatedProduct.image || "/placeholder.svg"}
-                          alt={relatedProduct.name}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                        />
-                      </div>
-                      <div className="p-4">
-                        <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">{relatedProduct.name}</h3>
-                        <div className="flex items-center space-x-2">
-                          <span className="text-lg font-bold text-red-600">
-                            ₹{relatedProduct.price.toLocaleString()}
-                          </span>
-                          {relatedProduct.originalPrice && (
-                            <span className="text-sm text-gray-500 line-through">
-                              ₹{relatedProduct.originalPrice.toLocaleString()}
-                            </span>
-                          )}
-                        </div>
-                      </div>
+                    <div className="aspect-[4/5] relative overflow-hidden rounded-lg mb-4">
+                      <img
+                        src={relatedProduct.image}
+                        alt={relatedProduct.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      {relatedProduct.isNew && (
+                        <Badge className="absolute top-2 left-2 bg-green-500">NEW</Badge>
+                      )}
                     </div>
-                  </motion.a>
+                    <h3 className="font-semibold text-gray-900 mb-2">{relatedProduct.name}</h3>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-red-600 font-bold">₹{relatedProduct.price.toLocaleString()}</span>
+                      {relatedProduct.originalPrice && (
+                        <span className="text-gray-500 line-through text-sm">
+                          ₹{relatedProduct.originalPrice.toLocaleString()}
+                        </span>
+                      )}
+                    </div>
+                  </motion.div>
                 ))}
               </div>
-            </motion.section>
+            </motion.div>
           )}
         </div>
       </main>

@@ -1,15 +1,35 @@
 "use client"
 
 import Link from "next/link"
+import { useState, useEffect } from "react"
 import { Navbar } from "@/components/navbar"
 import Footer from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Minus, Plus, Trash2 } from "lucide-react"
-import { useCart } from "@/hooks/use-cart"
+
+// Safe cart hook
+function useSafeCart() {
+  try {
+    const { useCart } = require("@/hooks/use-cart")
+    return useCart()
+  } catch {
+    return { items: [], total: 0, updateQuantity: () => {}, removeItem: () => {}, clearCart: () => {} }
+  }
+}
 
 export default function CartPage() {
-  const { items, total, updateQuantity, removeItem, clearCart } = useCart()
+  const { items, total, updateQuantity, removeItem, clearCart } = useSafeCart()
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+
+  // Don't render anything until client-side
+  if (!isClient) {
+    return null
+  }
 
   if (items.length === 0) {
     return (

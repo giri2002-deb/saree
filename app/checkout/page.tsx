@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Navbar } from "@/components/navbar"
 import Footer from "@/components/footer"
@@ -10,12 +10,26 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useCart } from "@/hooks/use-cart"
+
+// Safe cart hook
+function useSafeCart() {
+  try {
+    const { useCart } = require("@/hooks/use-cart")
+    return useCart()
+  } catch {
+    return { items: [], total: 0, clearCart: () => {} }
+  }
+}
 
 export default function CheckoutPage() {
   const router = useRouter()
-  const { items, total, clearCart } = useCart()
+  const { items, total, clearCart } = useSafeCart()
   const [isProcessing, setIsProcessing] = useState(false)
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -26,6 +40,11 @@ export default function CheckoutPage() {
 
     clearCart()
     router.push("/checkout/success")
+  }
+
+  // Don't render anything until client-side
+  if (!isClient) {
+    return null
   }
 
   if (items.length === 0) {

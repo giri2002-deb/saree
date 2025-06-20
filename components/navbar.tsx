@@ -9,15 +9,24 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { useCart } from "@/hooks/use-cart"
 import sareeData from "@/data/sarees.json"
+
+// Custom hook to safely use cart
+function useSafeCart() {
+  try {
+    const { useCart } = require("@/hooks/use-cart")
+    return useCart()
+  } catch {
+    return { items: [] as Array<{ quantity: number }>, total: 0 }
+  }
+}
 
 export function Navbar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
-  const { items } = useCart()
+  const { items } = useSafeCart()
   const pathname = usePathname()
-  const cartItemsCount = items.reduce((sum, item) => sum + item.quantity, 0)
+  const cartItemsCount = items.reduce((sum: number, item: { quantity: number }) => sum + item.quantity, 0)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -204,7 +213,7 @@ export function Navbar() {
                 <Input
                   type="search"
                   placeholder="Search for Products"
-                  className="pl-10 pr-4 py-2 w-full bg-white rounded-full"
+                  className="pl-10 pr-4 py-2 w-full bg-white/90 border-0 rounded-full focus:ring-2 focus:ring-yellow-400 focus:bg-white transition-all"
                 />
               </div>
             </motion.div>
@@ -213,4 +222,4 @@ export function Navbar() {
       </div>
     </motion.header>
   )
-}
+} 
