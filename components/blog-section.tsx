@@ -7,7 +7,7 @@ export function BlogSection() {
     {
       id: 1,
       title: "Kuppadam Silk Cotton Sarees - A Blend of Heritage and Elegance",
-      image: "/placeholder.svg?height=250&width=400&text=Blog+Post+1",
+      image: "/images (1).jpg",
       excerpt: "Discover the rich heritage and timeless elegance of Kuppadam silk cotton sarees...",
       date: "March 15, 2024",
       readTime: "5 min read",
@@ -15,7 +15,7 @@ export function BlogSection() {
     {
       id: 2,
       title: "The Art of Draping: Traditional vs Modern Styles",
-      image: "/placeholder.svg?height=250&width=400&text=Blog+Post+2",
+      image: "/images (2).jpg",
       excerpt: "Learn about different draping styles and how to choose the perfect one for your occasion...",
       date: "March 10, 2024",
       readTime: "7 min read",
@@ -23,7 +23,7 @@ export function BlogSection() {
     {
       id: 3,
       title: "Caring for Your Precious Sarees: A Complete Guide",
-      image: "/placeholder.svg?height=250&width=400&text=Blog+Post+3",
+      image: "/images (3).jpg",
       excerpt: "Essential tips and tricks to maintain the beauty and longevity of your saree collection...",
       date: "March 5, 2024",
       readTime: "6 min read",

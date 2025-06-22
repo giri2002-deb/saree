@@ -8,19 +8,19 @@ export function FeaturedCollection() {
     {
       id: 1,
       name: "BANARASI COTTON",
-      image: "/placeholder.svg?height=500&width=400&text=Banarasi+Cotton",
+      image: "/images (2).jpg",
       category: "banarasi",
     },
     {
       id: 2,
       name: "WOVEN KUPPADAM SILK BLEND SAREE",
-      image: "/placeholder.svg?height=500&width=400&text=Kuppadam+Silk",
+      image: "/images (3).jpg",
       category: "silk",
     },
     {
       id: 3,
       name: "TEAL BLUE COTTON SAREE",
-      image: "/placeholder.svg?height=500&width=400&text=Teal+Blue+Cotton",
+      image: "/images (4).jpg",
       category: "cotton",
     },
   ]

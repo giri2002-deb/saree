@@ -11,7 +11,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import sareeData from "@/data/sarees.json"
 
-// Custom hook to safely use cart
+// Safe cart fallback
 function useSafeCart() {
   try {
     const { useCart } = require("@/hooks/use-cart")
@@ -44,8 +44,8 @@ export function Navbar() {
   ]
 
   const navVariants = {
-    top: { backgroundColor: "rgba(220, 38, 38, 0.95)", backdropFilter: "blur(10px)" },
-    scrolled: { backgroundColor: "rgba(220, 38, 38, 1)", backdropFilter: "blur(20px)" },
+    top: { backgroundColor: "rgba(220,38,38,0.95)", backdropFilter: "blur(8px)" },
+    scrolled: { backgroundColor: "rgba(220,38,38,1)", backdropFilter: "blur(16px)" },
   }
 
   return (
@@ -53,28 +53,34 @@ export function Navbar() {
       variants={navVariants}
       animate={isScrolled ? "scrolled" : "top"}
       transition={{ duration: 0.3 }}
-      className="sticky top-0 z-50 w-full shadow-lg"
+      className="sticky top-0 z-50 w-full shadow-md"
     >
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Link href="/" className="text-2xl font-bold text-white hover:text-yellow-200 transition-colors">
+          {/* Animated Logo */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            whileHover={{ scale: 1.1, rotate: -1 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Link href="/" className="text-3xl font-extrabold tracking-wider text-white hover:text-yellow-300 transition duration-300">
               SAREE
             </Link>
           </motion.div>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Nav */}
           <nav className="hidden md:flex items-center space-x-8">
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center space-x-1 text-white hover:text-yellow-200 transition-colors font-medium">
+              <DropdownMenuTrigger className="flex items-center space-x-1 text-white hover:text-yellow-300 font-medium ml-6">
                 <span>All Categories</span>
                 <ChevronDown className="h-4 w-4" />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start" className="w-48">
                 {sareeData.categories.map((category) => (
                   <DropdownMenuItem key={category.id} asChild>
-                    <Link href={`/category/${category.id}`} className="w-full">
+                    <Link href={`/category/${category.id}`} className="w-full text-sm">
                       {category.name}
                     </Link>
                   </DropdownMenuItem>
@@ -83,16 +89,11 @@ export function Navbar() {
             </DropdownMenu>
 
             {navigationLinks.map((link, index) => (
-              <motion.div
-                key={link.name}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-              >
+              <motion.div key={link.name} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.1 }}>
                 <Link
                   href={link.href}
-                  className={`text-white hover:text-yellow-200 transition-colors font-medium ${
-                    pathname === link.href ? "text-yellow-200" : ""
+                  className={`text-white font-medium hover:text-yellow-300 transition ${
+                    pathname === link.href ? "text-yellow-300 underline underline-offset-4" : ""
                   }`}
                 >
                   {link.name}
@@ -101,25 +102,25 @@ export function Navbar() {
             ))}
           </nav>
 
-          {/* Search Bar - Desktop */}
+          {/* Search - Desktop */}
           <div className="hidden lg:flex items-center flex-1 max-w-md mx-8">
             <motion.div whileFocus={{ scale: 1.02 }} className="relative w-full">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
               <Input
                 type="search"
                 placeholder="Search for Products"
-                className="pl-10 pr-4 py-2 w-full bg-white/90 border-0 rounded-full focus:ring-2 focus:ring-yellow-400 focus:bg-white transition-all"
+                className="pl-10 pr-4 py-2 w-full bg-white text-gray-800 border border-gray-300 rounded-full focus:ring-2 focus:ring-yellow-400 focus:outline-none"
               />
             </motion.div>
           </div>
 
-          {/* Right Side Actions */}
+          {/* Right Section */}
           <div className="flex items-center space-x-4">
-            {/* Search Button - Mobile */}
+            {/* Mobile Search Button */}
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden text-white hover:text-yellow-200"
+              className="md:hidden text-white hover:text-yellow-300"
               onClick={() => setIsSearchOpen(!isSearchOpen)}
             >
               <Search className="h-5 w-5" />
@@ -128,7 +129,7 @@ export function Navbar() {
             {/* Cart */}
             <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
               <Link href="/cart">
-                <Button variant="ghost" size="icon" className="relative text-white hover:text-yellow-200">
+                <Button variant="ghost" size="icon" className="relative text-white hover:text-yellow-300 ml-2">
                   <ShoppingCart className="h-5 w-5" />
                   <AnimatePresence>
                     {cartItemsCount > 0 && (
@@ -136,7 +137,7 @@ export function Navbar() {
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         exit={{ scale: 0 }}
-                        className="absolute -top-1 -right-1 bg-yellow-400 text-red-600 text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold"
+                        className="absolute -top-1.5 -right-1.5 bg-yellow-400 text-red-700 text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold shadow-sm"
                       >
                         {cartItemsCount}
                       </motion.span>
@@ -149,7 +150,7 @@ export function Navbar() {
             {/* Mobile Menu */}
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="md:hidden text-white hover:text-yellow-200">
+                <Button variant="ghost" size="icon" className="md:hidden text-white hover:text-yellow-300">
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
@@ -158,22 +159,16 @@ export function Navbar() {
                   <div className="space-y-2">
                     <h3 className="font-semibold text-lg">Categories</h3>
                     {sareeData.categories.map((category, index) => (
-                      <motion.div
-                        key={category.id}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.1 }}
-                      >
+                      <motion.div key={category.id} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: index * 0.1 }}>
                         <Link
                           href={`/category/${category.id}`}
-                          className="block py-2 text-gray-600 hover:text-gray-900 transition-colors"
+                          className="block py-2 text-gray-700 hover:text-red-600 font-medium transition"
                         >
                           {category.name}
                         </Link>
                       </motion.div>
                     ))}
                   </div>
-
                   <div className="border-t pt-4 space-y-2">
                     {navigationLinks.map((link, index) => (
                       <motion.div
@@ -185,7 +180,7 @@ export function Navbar() {
                         <Link
                           href={link.href}
                           className={`block py-2 transition-colors ${
-                            pathname === link.href ? "text-red-600 font-medium" : "text-gray-600 hover:text-gray-900"
+                            pathname === link.href ? "text-red-600 font-semibold" : "text-gray-700 hover:text-red-600"
                           }`}
                         >
                           {link.name}
@@ -213,7 +208,7 @@ export function Navbar() {
                 <Input
                   type="search"
                   placeholder="Search for Products"
-                  className="pl-10 pr-4 py-2 w-full bg-white/90 border-0 rounded-full focus:ring-2 focus:ring-yellow-400 focus:bg-white transition-all"
+                  className="pl-10 pr-4 py-2 w-full bg-white text-gray-800 border border-gray-300 rounded-full focus:ring-2 focus:ring-yellow-400 focus:outline-none"
                 />
               </div>
             </motion.div>
@@ -222,4 +217,4 @@ export function Navbar() {
       </div>
     </motion.header>
   )
-} 
+}

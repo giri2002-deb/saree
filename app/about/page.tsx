@@ -92,7 +92,7 @@ export default function AboutPage() {
                 className="relative"
               >
                 <img
-                  src="/placeholder.svg?height=500&width=600&text=Our+Story+Image"
+                  src="/sh6.jpg"
                   alt="Our Story"
                   className="w-full h-96 object-cover rounded-2xl shadow-lg"
                 />
