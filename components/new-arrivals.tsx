@@ -74,69 +74,71 @@ export function NewArrivals() {
           </div>
         </div>
 
-        <div className="relative overflow-hidden">
-          <div
-            className="flex transition-transform duration-300 ease-in-out"
-            style={{ transform: `translateX(-${currentIndex * (100 / itemsPerPage)}%)` }}
-          >
-            {visibleArrivals.map((product) => (
-              <div key={product.id} className="w-full md:w-1/4 flex-shrink-0 px-2">
-                <Card className="group cursor-pointer overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                  <div className="relative overflow-hidden">
-                    <Link href={`/products/${product.id}`}>
-                      <img
-                        src={product.images[0] || "/placeholder.svg"}
-                        alt={product.name}
-                        className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </Link>
-                    <Button variant="ghost" size="icon" className="absolute top-4 right-4 bg-white/80 hover:bg-white">
-                      <Heart className="h-4 w-4" />
-                    </Button>
-                    {product.isNew && (
-                      <span className="absolute top-4 left-4 bg-red-500 text-white px-2 py-1 text-xs font-semibold rounded">
-                        NEW
-                      </span>
-                    )}
-                  </div>
-                  <CardContent className="p-4">
-                    <Link href={`/products/${product.id}`}>
-                      <h3 className="font-semibold text-gray-900 mb-2 hover:text-gray-700 transition-colors">
-                        {product.name}
-                      </h3>
-                    </Link>
-                    <p className="text-gray-600 text-sm mb-2">{product.category}</p>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-2">
-                        <span className="text-lg font-bold text-gray-900">{product.price}</span>
-                        {product.originalPrice && (
-                          <span className="text-sm text-gray-500 line-through">{product.originalPrice}</span>
-                        )}
-                      </div>
+        <div className="w-full">
+          <div className="relative overflow-hidden">
+            <div
+              className="flex transition-transform duration-300 ease-in-out"
+              style={{ transform: `translateX(-${currentIndex * (100 / itemsPerPage)}%)` }}
+            >
+              {visibleArrivals.map((product) => (
+                <div key={product.id} className="w-full md:w-1/4 flex-shrink-0 px-2">
+                  <Card className="group cursor-pointer overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                    <div className="relative overflow-hidden">
+                      <Link href={`/products/${product.id}`}>
+                        <img
+                          src={product.images[0] || "/placeholder.svg"}
+                          alt={product.name}
+                          className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </Link>
+                      <Button variant="ghost" size="icon" className="absolute top-4 right-4 bg-white/80 hover:bg-white">
+                        <Heart className="h-4 w-4" />
+                      </Button>
+                      {product.isNew && (
+                        <span className="absolute top-4 left-4 bg-red-500 text-white px-2 py-1 text-xs font-semibold rounded">
+                          NEW
+                        </span>
+                      )}
                     </div>
-                  </CardContent>
-                </Card>
-              </div>
-            ))}
+                    <CardContent className="p-4">
+                      <Link href={`/products/${product.id}`}>
+                        <h3 className="font-semibold text-gray-900 mb-2 hover:text-gray-700 transition-colors">
+                          {product.name}
+                        </h3>
+                      </Link>
+                      <p className="text-gray-600 text-sm mb-2">{product.category}</p>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-2">
+                          <span className="text-lg font-bold text-gray-900">{product.price}</span>
+                          {product.originalPrice && (
+                            <span className="text-sm text-gray-500 line-through">{product.originalPrice}</span>
+                          )}
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* Mobile Navigation */}
-        <div className="flex md:hidden justify-center space-x-2 mt-6">
-          <Button variant="outline" size="icon" onClick={prevSlide} disabled={currentIndex === 0}>
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-          <Button variant="outline" size="icon" onClick={nextSlide} disabled={currentIndex >= maxIndex}>
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-        </div>
-
-        <div className="text-center mt-8">
-          <Link href="/products">
-            <Button variant="outline" size="lg">
-              View All Products
+          {/* Mobile Navigation */}
+          <div className="flex md:hidden justify-center space-x-2 mt-6">
+            <Button variant="outline" size="icon" onClick={prevSlide} disabled={currentIndex === 0}>
+              <ChevronLeft className="h-4 w-4" />
             </Button>
-          </Link>
+            <Button variant="outline" size="icon" onClick={nextSlide} disabled={currentIndex >= maxIndex}>
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
+
+          <div className="text-center mt-8">
+            <Link href="/products">
+              <Button variant="outline" size="lg">
+                View All Products
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
     </section>

@@ -7,7 +7,12 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Search, Menu, ShoppingCart, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import sareeData from "@/data/sarees.json"
 
@@ -29,9 +34,7 @@ export function Navbar() {
   const cartItemsCount = items.reduce((sum: number, item: { quantity: number }) => sum + item.quantity, 0)
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-    }
+    const handleScroll = () => setIsScrolled(window.scrollY > 50)
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
@@ -57,25 +60,21 @@ export function Navbar() {
     >
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
-          {/* Animated Logo */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            whileHover={{ scale: 1.1, rotate: -1 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Link href="/" className="text-3xl font-extrabold tracking-wider text-white hover:text-yellow-300 transition duration-300">
+          {/* Logo + Left Section */}
+          <div className="flex items-center space-x-8">
+            {/* Logo */}
+            <Link
+              href="/"
+              className="text-3xl font-extrabold tracking-wider text-white hover:text-yellow-300 transition duration-300"
+            >
               SAREE
             </Link>
-          </motion.div>
 
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center space-x-8">
+            {/* All Categories Dropdown */}
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center space-x-1 text-white hover:text-yellow-300 font-medium ml-6">
-                <span>All Categories</span>
+              <DropdownMenuTrigger className="flex items-center space-x-1 text-white hover:text-yellow-300 font-medium text-base">
                 <ChevronDown className="h-4 w-4" />
+                <span>All Categories</span>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start" className="w-48">
                 {sareeData.categories.map((category) => (
@@ -88,9 +87,11 @@ export function Navbar() {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            {navigationLinks.map((link, index) => (
-              <motion.div key={link.name} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.1 }}>
+            {/* Main Navigation */}
+            <nav className="hidden md:flex items-center space-x-6">
+              {navigationLinks.map((link, index) => (
                 <Link
+                  key={link.name}
                   href={link.href}
                   className={`text-white font-medium hover:text-yellow-300 transition ${
                     pathname === link.href ? "text-yellow-300 underline underline-offset-4" : ""
@@ -98,20 +99,20 @@ export function Navbar() {
                 >
                   {link.name}
                 </Link>
-              </motion.div>
-            ))}
-          </nav>
+              ))}
+            </nav>
+          </div>
 
-          {/* Search - Desktop */}
+          {/* Search Bar */}
           <div className="hidden lg:flex items-center flex-1 max-w-md mx-8">
-            <motion.div whileFocus={{ scale: 1.02 }} className="relative w-full">
+            <div className="relative w-full">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
               <Input
                 type="search"
                 placeholder="Search for Products"
                 className="pl-10 pr-4 py-2 w-full bg-white text-gray-800 border border-gray-300 rounded-full focus:ring-2 focus:ring-yellow-400 focus:outline-none"
               />
-            </motion.div>
+            </div>
           </div>
 
           {/* Right Section */}
@@ -127,25 +128,23 @@ export function Navbar() {
             </Button>
 
             {/* Cart */}
-            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-              <Link href="/cart">
-                <Button variant="ghost" size="icon" className="relative text-white hover:text-yellow-300 ml-2">
-                  <ShoppingCart className="h-5 w-5" />
-                  <AnimatePresence>
-                    {cartItemsCount > 0 && (
-                      <motion.span
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        exit={{ scale: 0 }}
-                        className="absolute -top-1.5 -right-1.5 bg-yellow-400 text-red-700 text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold shadow-sm"
-                      >
-                        {cartItemsCount}
-                      </motion.span>
-                    )}
-                  </AnimatePresence>
-                </Button>
-              </Link>
-            </motion.div>
+            <Link href="/cart">
+              <Button variant="ghost" size="icon" className="relative text-white hover:text-yellow-300">
+                <ShoppingCart className="h-5 w-5" />
+                <AnimatePresence>
+                  {cartItemsCount > 0 && (
+                    <motion.span
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      exit={{ scale: 0 }}
+                      className="absolute -top-1.5 -right-1.5 bg-yellow-400 text-red-700 text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold shadow-sm"
+                    >
+                      {cartItemsCount}
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </Button>
+            </Link>
 
             {/* Mobile Menu */}
             <Sheet>
@@ -158,34 +157,29 @@ export function Navbar() {
                 <div className="flex flex-col space-y-4 mt-8">
                   <div className="space-y-2">
                     <h3 className="font-semibold text-lg">Categories</h3>
-                    {sareeData.categories.map((category, index) => (
-                      <motion.div key={category.id} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: index * 0.1 }}>
-                        <Link
-                          href={`/category/${category.id}`}
-                          className="block py-2 text-gray-700 hover:text-red-600 font-medium transition"
-                        >
-                          {category.name}
-                        </Link>
-                      </motion.div>
+                    {sareeData.categories.map((category) => (
+                      <Link
+                        key={category.id}
+                        href={`/category/${category.id}`}
+                        className="block py-2 text-gray-700 hover:text-red-600 font-medium transition"
+                      >
+                        {category.name}
+                      </Link>
                     ))}
                   </div>
                   <div className="border-t pt-4 space-y-2">
-                    {navigationLinks.map((link, index) => (
-                      <motion.div
+                    {navigationLinks.map((link) => (
+                      <Link
                         key={link.name}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: (index + sareeData.categories.length) * 0.1 }}
+                        href={link.href}
+                        className={`block py-2 transition-colors ${
+                          pathname === link.href
+                            ? "text-red-600 font-semibold"
+                            : "text-gray-700 hover:text-red-600"
+                        }`}
                       >
-                        <Link
-                          href={link.href}
-                          className={`block py-2 transition-colors ${
-                            pathname === link.href ? "text-red-600 font-semibold" : "text-gray-700 hover:text-red-600"
-                          }`}
-                        >
-                          {link.name}
-                        </Link>
-                      </motion.div>
+                        {link.name}
+                      </Link>
                     ))}
                   </div>
                 </div>

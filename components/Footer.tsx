@@ -50,7 +50,7 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="bg-gray-900 text-white w-full">
       {/* Newsletter Section */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
@@ -58,7 +58,7 @@ export default function Footer() {
         transition={{ duration: 0.8 }}
         className="bg-red-600 py-16"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="text-center w-full">
           <motion.h3
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -96,7 +96,7 @@ export default function Footer() {
       </motion.div>
 
       {/* Main Footer Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="py-16 w-full">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -225,7 +225,7 @@ export default function Footer() {
         transition={{ delay: 0.8 }}
         className="border-t border-gray-800"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="py-8 w-full">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="flex flex-wrap justify-center md:justify-start gap-6 text-sm">
               {["Privacy Policy", "Terms & Conditions", "Return Policy", "Shipping Info"].map((item, index) => (

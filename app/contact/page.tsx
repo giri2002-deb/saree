@@ -55,7 +55,7 @@ export default function ContactPage() {
       <main className="pt-20">
         {/* Hero Section */}
         <section className="py-16 bg-gradient-to-br from-red-50 to-orange-50">
-          <div className="container mx-auto px-4">
+          <div className="w-full">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -71,7 +71,7 @@ export default function ContactPage() {
         </section>
 
         <section className="py-16">
-          <div className="container mx-auto px-4">
+          <div className="w-full">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               {/* Contact Form */}
               <motion.div

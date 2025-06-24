@@ -56,77 +56,79 @@ export default function CheckoutPage() {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <main className="flex-1">
-        <div className="container mx-auto px-4 py-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-8">Checkout</h1>
+        <div className="w-full py-8">
+          <div className="container mx-auto px-4">
+            <h1 className="text-3xl font-bold text-gray-900 mb-8">Checkout</h1>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Shipping Information</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="firstName">First Name</Label>
-                        <Input id="firstName" required />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Shipping Information</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <Label htmlFor="firstName">First Name</Label>
+                          <Input id="firstName" required />
+                        </div>
+                        <div>
+                          <Label htmlFor="lastName">Last Name</Label>
+                          <Input id="lastName" required />
+                        </div>
                       </div>
                       <div>
-                        <Label htmlFor="lastName">Last Name</Label>
-                        <Input id="lastName" required />
-                      </div>
-                    </div>
-                    <div>
-                      <Label htmlFor="email">Email</Label>
-                      <Input id="email" type="email" required />
-                    </div>
-                    <div>
-                      <Label htmlFor="address">Address</Label>
-                      <Input id="address" required />
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="city">City</Label>
-                        <Input id="city" required />
+                        <Label htmlFor="email">Email</Label>
+                        <Input id="email" type="email" required />
                       </div>
                       <div>
-                        <Label htmlFor="zipCode">ZIP Code</Label>
-                        <Input id="zipCode" required />
+                        <Label htmlFor="address">Address</Label>
+                        <Input id="address" required />
                       </div>
-                    </div>
-                    <Button type="submit" className="w-full" disabled={isProcessing}>
-                      {isProcessing ? "Processing..." : "Place Order"}
-                    </Button>
-                  </form>
-                </CardContent>
-              </Card>
-            </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <Label htmlFor="city">City</Label>
+                          <Input id="city" required />
+                        </div>
+                        <div>
+                          <Label htmlFor="zipCode">ZIP Code</Label>
+                          <Input id="zipCode" required />
+                        </div>
+                      </div>
+                      <Button type="submit" className="w-full" disabled={isProcessing}>
+                        {isProcessing ? "Processing..." : "Place Order"}
+                      </Button>
+                    </form>
+                  </CardContent>
+                </Card>
+              </div>
 
-            <div>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Order Summary</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {items.map((item) => (
-                      <div key={item.id} className="flex justify-between">
-                        <span>
-                          {item.name} x {item.quantity}
-                        </span>
-                        <span>${(item.price * item.quantity).toFixed(2)}</span>
-                      </div>
-                    ))}
-                    <div className="border-t pt-4">
-                      <div className="flex justify-between font-semibold">
-                        <span>Total</span>
-                        <span>${total.toFixed(2)}</span>
+              <div>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Order Summary</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      {items.map((item) => (
+                        <div key={item.id} className="flex justify-between">
+                          <span>
+                            {item.name} x {item.quantity}
+                          </span>
+                          <span>${(item.price * item.quantity).toFixed(2)}</span>
+                        </div>
+                      ))}
+                      <div className="border-t pt-4">
+                        <div className="flex justify-between font-semibold">
+                          <span>Total</span>
+                          <span>${total.toFixed(2)}</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
           </div>
         </div>

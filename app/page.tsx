@@ -24,7 +24,7 @@ export default function HomePage() {
       exit="out"
       variants={pageVariants}
       transition={{ duration: 0.5 }}
-      className="min-h-screen"
+      className="min-h-screen w-full mx-0 px-0"
     >
       <Navbar />
       <main>
