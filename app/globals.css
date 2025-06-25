@@ -2,10 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overscroll-behavior: none; /* prevents drag bounce */
+  touch-action: manipulation; 
+   font-family: Arial, Helvetica, sans-serif;/* disables unwanted pan/zoom */
 }
-
 @layer utilities {
   .text-balance {
     text-wrap: balance;
