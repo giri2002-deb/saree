@@ -69,7 +69,7 @@ export function HeroSection() {
   }
 
   return (
-    <section className="relative min-h-screen w-full overflow-hidden flex items-center justify-center">
+    <section className="relative min-h-[100dvh] w-full overflow-hidden flex items-center justify-center">
       {/* Background Slide */}
       <div className="absolute inset-0 -z-10">
         <AnimatePresence mode="wait">
@@ -112,7 +112,7 @@ export function HeroSection() {
       ))}
 
       {/* Main Content */}
-      <div className="relative z-20 text-center text-white w-full px-4 max-w-3xl mx-auto">
+      <div className="relative z-20 text-center text-white w-full px-4 sm:px-6 md:px-8 pt-[50px] md:pt-[100px] pb-[50px] md:pb-[100px]">
         <AnimatePresence mode="wait">
           <motion.div
             key={slides[current].title}
@@ -122,10 +122,10 @@ export function HeroSection() {
             transition={{ duration: 0.8 }}
             className="flex flex-col items-center justify-center space-y-6"
           >
-            <h1 className="text-4xl md:text-6xl font-bold drop-shadow-lg">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold drop-shadow-lg">
               {slides[current].title}
             </h1>
-            <p className="text-lg md:text-2xl text-white/90 font-medium">
+            <p className="text-base sm:text-lg md:text-2xl text-white/90 font-medium">
               {slides[current].subtitle}
             </p>
 
@@ -137,14 +137,14 @@ export function HeroSection() {
                 ease: "easeInOut",
               }}
             >
-              {/* <Link href="/products">
+              <Link href="/products">
                 <Button
                   size="lg"
                   className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 text-sm font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
                 >
                   {slides[current].buttonText} →
                 </Button>
-              </Link> */}
+              </Link>
             </motion.div>
           </motion.div>
         </AnimatePresence>
