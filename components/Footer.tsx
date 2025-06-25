@@ -1,14 +1,47 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Facebook, Instagram, Twitter, Mail, Phone, MapPin, Youtube } from "lucide-react"
+import {
+  Facebook,
+  Instagram,
+  Twitter,
+  Mail,
+  Phone,
+  MapPin,
+  Youtube,
+} from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-export default function Footer() {
-  // ... (same quickLinks, categories, customerService as before)
 
+const quickLinks = [
+  { name: "Home", href: "/" },
+  { name: "Shop", href: "/shop" },
+  { name: "About Us", href: "/about" },
+  { name: "Contact", href: "/contact" },
+]
+
+const categories = [
+  { name: "Silk Sarees", href: "/category/silk" },
+  { name: "Cotton Sarees", href: "/category/cotton" },
+  { name: "Designer Sarees", href: "/category/designer" },
+  { name: "Bridal Sarees", href: "/category/bridal" },
+]
+
+const customerService = [
+  { name: "FAQs", href: "/faqs" },
+  { name: "Order Tracking", href: "/order-tracking" },
+  { name: "Return Policy", href: "/returns" },
+  { name: "Shipping Info", href: "/shipping" },
+]
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+}
+
+export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-white w-full">
+    <footer className="bg-gray-900 text-white w-full text-center sm:text-left">
       {/* Newsletter Section */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
@@ -58,24 +91,34 @@ export default function Footer() {
         <motion.div
           variants={{
             hidden: { opacity: 0 },
-            visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
+            visible: {
+              opacity: 1,
+              transition: { staggerChildren: 0.1 },
+            },
           }}
           initial="hidden"
           animate="visible"
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 text-center sm:text-left"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10"
         >
           {/* Brand Info */}
           <motion.div variants={itemVariants} className="space-y-6">
-            <motion.h3 whileHover={{ scale: 1.05 }} className="text-3xl font-bold text-red-400">
+            <motion.h3
+              whileHover={{ scale: 1.05 }}
+              className="text-3xl font-bold text-red-400"
+            >
               SAREE
             </motion.h3>
             <p className="text-gray-300 text-sm leading-relaxed">
-              Discover the beauty of traditional Indian sarees with our curated collection of premium fabrics and
-              timeless designs.
+              Discover the beauty of traditional Indian sarees with our curated
+              collection of premium fabrics and timeless designs.
             </p>
             <div className="flex justify-center sm:justify-start gap-4">
               {[Facebook, Instagram, Twitter, Youtube].map((Icon, index) => (
-                <motion.div key={index} whileHover={{ scale: 1.2, y: -2 }} whileTap={{ scale: 0.9 }}>
+                <motion.div
+                  key={index}
+                  whileHover={{ scale: 1.2, y: -2 }}
+                  whileTap={{ scale: 0.9 }}
+                >
                   <Button
                     variant="ghost"
                     size="icon"
@@ -90,11 +133,22 @@ export default function Footer() {
 
           {/* Quick Links */}
           <motion.div variants={itemVariants}>
-            <h4 className="text-lg font-semibold mb-6 text-red-400">Quick Links</h4>
+            <h4 className="text-lg font-semibold mb-6 text-red-400">
+              Quick Links
+            </h4>
             <ul className="space-y-3">
               {quickLinks.map((link, index) => (
-                <motion.li key={index} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: index * 0.1 }}>
-                  <motion.a href={link.href} className="text-gray-300 hover:text-white transition-colors block" whileHover={{ x: 5 }}>
+                <motion.li
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <motion.a
+                    href={link.href}
+                    className="text-gray-300 hover:text-white transition-colors block"
+                    whileHover={{ x: 5 }}
+                  >
                     {link.name}
                   </motion.a>
                 </motion.li>
@@ -104,11 +158,22 @@ export default function Footer() {
 
           {/* Categories */}
           <motion.div variants={itemVariants}>
-            <h4 className="text-lg font-semibold mb-6 text-red-400">Categories</h4>
+            <h4 className="text-lg font-semibold mb-6 text-red-400">
+              Categories
+            </h4>
             <ul className="space-y-3">
               {categories.map((cat, index) => (
-                <motion.li key={index} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: index * 0.1 }}>
-                  <motion.a href={cat.href} className="text-gray-300 hover:text-white transition-colors block" whileHover={{ x: 5 }}>
+                <motion.li
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <motion.a
+                    href={cat.href}
+                    className="text-gray-300 hover:text-white transition-colors block"
+                    whileHover={{ x: 5 }}
+                  >
                     {cat.name}
                   </motion.a>
                 </motion.li>
@@ -118,7 +183,9 @@ export default function Footer() {
 
           {/* Contact + Customer Service */}
           <motion.div variants={itemVariants}>
-            <h4 className="text-lg font-semibold mb-6 text-red-400">Contact Us</h4>
+            <h4 className="text-lg font-semibold mb-6 text-red-400">
+              Contact Us
+            </h4>
             <div className="space-y-4 text-sm">
               <div className="flex items-center justify-center sm:justify-start gap-3">
                 <Mail className="h-4 w-4 text-red-400" />
@@ -138,11 +205,22 @@ export default function Footer() {
               </div>
             </div>
 
-            <h5 className="font-semibold mt-6 mb-3 text-white">Customer Service</h5>
+            <h5 className="font-semibold mt-6 mb-3 text-white">
+              Customer Service
+            </h5>
             <ul className="space-y-2 text-sm">
               {customerService.slice(0, 3).map((svc, index) => (
-                <motion.li key={index} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: index * 0.1 }}>
-                  <motion.a href={svc.href} className="text-gray-300 hover:text-white block" whileHover={{ x: 5 }}>
+                <motion.li
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <motion.a
+                    href={svc.href}
+                    className="text-gray-300 hover:text-white block"
+                    whileHover={{ x: 5 }}
+                  >
                     {svc.name}
                   </motion.a>
                 </motion.li>
@@ -161,10 +239,18 @@ export default function Footer() {
       >
         <div className="py-6 px-4 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm">
           <div className="flex flex-wrap justify-center gap-4 text-gray-400">
-            {["Privacy Policy", "Terms & Conditions", "Return Policy", "Shipping Info"].map((item, index) => (
+            {[
+              "Privacy Policy",
+              "Terms & Conditions",
+              "Return Policy",
+              "Shipping Info",
+            ].map((item, index) => (
               <motion.a
                 key={index}
-                href={`/${item.toLowerCase().replace(/\s+/g, "-").replace("&", "and")}`}
+                href={`/${item
+                  .toLowerCase()
+                  .replace(/\s+/g, "-")
+                  .replace("&", "and")}`}
                 className="hover:text-white"
                 whileHover={{ y: -1 }}
               >
@@ -173,7 +259,7 @@ export default function Footer() {
             ))}
           </div>
           <motion.p className="text-gray-400">
-            © 2024 SAREE. All Rights Reserved. | Made with for Saree Lovers
+            © 2024 SAREE. All Rights Reserved. | Made with ❤️ for Saree Lovers
           </motion.p>
         </div>
       </motion.div>
