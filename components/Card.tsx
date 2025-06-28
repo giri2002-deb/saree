@@ -1,210 +1,163 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Heart, ShoppingCart, Star } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { useState } from "react"
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import { Navbar } from "@/components/navbar";
+import Footer from "@/components/Footer";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Minus, Plus, Trash2 } from "lucide-react";
 
-interface CardProps {
-  saree: {
-    id: number
-    name: string
-    price: number
-    originalPrice?: number
-    image: string
-    rating: number
-    reviews: number
-    isNew?: boolean
-    tags: string[]
-  }
-  index?: number
+interface CartItem {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+  image?: string;
 }
 
-export default function Card({ saree, index = 0 }: CardProps) {
-  const [isWishlisted, setIsWishlisted] = useState(false)
-  const [isHovered, setIsHovered] = useState(false)
+interface SafeCart {
+  items: CartItem[];
+  total: number;
+  updateQuantity: (id: number, quantity: number) => void;
+  removeItem: (id: number) => void;
+  clearCart: () => void;
+}
 
-  const discount = saree.originalPrice
-    ? Math.round(((saree.originalPrice - saree.price) / saree.originalPrice) * 100)
-    : 0
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        delay: index * 0.1,
-        ease: "easeOut",
-      },
-    },
+// Safe cart hook wrapper
+function useSafeCart(): SafeCart {
+  try {
+    const { useCart } = require("@/hooks/use-cart");
+    return useCart();
+  } catch {
+    return {
+      items: [],
+      total: 0,
+      updateQuantity: () => {},
+      removeItem: () => {},
+      clearCart: () => {},
+    };
   }
+}
 
-  const imageVariants = {
-    rest: { scale: 1 },
-    hover: { scale: 1.1 },
-  }
+export default function CartPage() {
+  const { items, total, updateQuantity, removeItem, clearCart } = useSafeCart();
+  const [isClient, setIsClient] = useState(false);
 
-  const overlayVariants = {
-    rest: { opacity: 0 },
-    hover: { opacity: 1 },
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) return null;
+
+  if (items.length === 0) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Navbar />
+        <main className="flex-1 flex items-center justify-center">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-gray-900 mb-4">Your Cart is Empty</h1>
+            <p className="text-gray-600 mb-8">Add some beautiful sarees to your cart!</p>
+            <Link href="/products">
+              <Button>Continue Shopping</Button>
+            </Link>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
   }
 
   return (
-    <motion.div
-      variants={cardVariants}
-      initial="hidden"
-      animate="visible"
-      whileHover={{ y: -10 }}
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
-      className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300"
-    >
-      {/* Image Container */}
-      <div className="relative aspect-[3/4] overflow-hidden">
-        <motion.img
-          src={saree.image}
-          alt={saree.name}
-          className="w-full h-full object-cover"
-          variants={imageVariants}
-          animate={isHovered ? "hover" : "rest"}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-        />
+    <div className="min-h-screen flex flex-col">
+      <Navbar />
+      <main className="flex-1">
+        <div className="w-full py-8">
+          <div className="container mx-auto px-4">
+            <h1 className="text-3xl font-bold text-gray-900 mb-8">Shopping Cart</h1>
 
-        {/* Overlay */}
-        <motion.div
-          variants={overlayVariants}
-          animate={isHovered ? "hover" : "rest"}
-          className="absolute inset-0 bg-black/20 flex items-center justify-center"
-        >
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={isHovered ? { scale: 1 } : { scale: 0 }}
-            transition={{ duration: 0.3 }}
-            className="flex space-x-3"
-          >
-            <Button size="icon" className="bg-white/90 hover:bg-white text-gray-900 rounded-full shadow-lg">
-              <ShoppingCart className="h-4 w-4" />
-            </Button>
-            <Button
-              size="icon"
-              variant="outline"
-              className="bg-white/90 hover:bg-white border-white rounded-full shadow-lg"
-            >
-              <Heart className="h-4 w-4" />
-            </Button>
-          </motion.div>
-        </motion.div>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {/* Cart Items */}
+              <div className="lg:col-span-2 space-y-4">
+                {items.map((item) => (
+                  <Card key={item.id}>
+                    <CardContent className="p-6">
+                      <div className="flex items-center space-x-4">
+                        <img
+                          src={item.image || "/placeholder.svg"}
+                          alt={item.name || "Product Image"}
+                          className="w-20 h-20 object-cover rounded-lg"
+                        />
+                        <div className="flex-1">
+                          <h3 className="font-semibold text-gray-900">{item.name}</h3>
+                          <p className="text-gray-600">₹{item.price.toLocaleString()}</p>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}
+                          >
+                            <Minus className="h-4 w-4" />
+                          </Button>
+                          <span className="w-8 text-center">{item.quantity}</span>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                          >
+                            <Plus className="h-4 w-4" />
+                          </Button>
+                        </div>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => removeItem(item.id)}
+                          title="Remove Item"
+                        >
+                          <Trash2 className="h-4 w-4 text-red-500" />
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
 
-        {/* Badges */}
-        <div className="absolute top-4 left-4 flex flex-col space-y-2">
-          {saree.isNew && (
-            <motion.span
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.3 }}
-              className="bg-green-500 text-white px-2 py-1 text-xs font-semibold rounded-full"
-            >
-              NEW
-            </motion.span>
-          )}
-          {discount > 0 && (
-            <motion.span
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.4 }}
-              className="bg-red-500 text-white px-2 py-1 text-xs font-semibold rounded-full"
-            >
-              {discount}% OFF
-            </motion.span>
-          )}
-        </div>
-
-        {/* Wishlist Button */}
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={() => setIsWishlisted(!isWishlisted)}
-          className="absolute top-4 right-4 p-2 bg-white/90 hover:bg-white rounded-full shadow-lg transition-colors"
-        >
-          <Heart
-            className={`h-4 w-4 transition-colors ${isWishlisted ? "fill-red-500 text-red-500" : "text-gray-600"}`}
-          />
-        </motion.button>
-      </div>
-
-      {/* Content */}
-      <div className="p-6">
-        <motion.h3
-          className="font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-red-600 transition-colors"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-        >
-          {saree.name}
-        </motion.h3>
-
-        {/* Rating */}
-        <motion.div
-          className="flex items-center space-x-1 mb-3"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-        >
-          <div className="flex">
-            {[...Array(5)].map((_, i) => (
-              <Star
-                key={i}
-                className={`h-4 w-4 ${i < Math.floor(saree.rating) ? "text-yellow-400 fill-current" : "text-gray-300"}`}
-              />
-            ))}
+              {/* Order Summary */}
+              <div>
+                <Card>
+                  <CardContent className="p-6">
+                    <h3 className="text-lg font-semibold mb-4">Order Summary</h3>
+                    <div className="space-y-2 mb-4">
+                      <div className="flex justify-between">
+                        <span>Subtotal</span>
+                        <span>₹{total.toLocaleString()}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Shipping</span>
+                        <span>Free</span>
+                      </div>
+                      <div className="border-t pt-2">
+                        <div className="flex justify-between font-semibold">
+                          <span>Total</span>
+                          <span>₹{total.toLocaleString()}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <Link href="/checkout">
+                      <Button className="w-full mb-2">Proceed to Checkout</Button>
+                    </Link>
+                    <Button variant="outline" className="w-full" onClick={clearCart}>
+                      Clear Cart
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
           </div>
-          <span className="text-sm text-gray-600">
-            {saree.rating} ({saree.reviews})
-          </span>
-        </motion.div>
-
-        {/* Price */}
-        <motion.div
-          className="flex items-center space-x-2 mb-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-        >
-          <span className="text-xl font-bold text-gray-900">₹{saree.price.toLocaleString()}</span>
-          {saree.originalPrice && (
-            <span className="text-sm text-gray-500 line-through">₹{saree.originalPrice.toLocaleString()}</span>
-          )}
-        </motion.div>
-
-        {/* Tags */}
-        <motion.div
-          className="flex flex-wrap gap-1 mb-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-        >
-          {saree.tags.slice(0, 3).map((tag, index) => (
-            <span key={tag} className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
-              {tag}
-            </span>
-          ))}
-        </motion.div>
-
-        {/* Add to Cart Button */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}>
-          <Button
-            className="w-full bg-red-600 hover:bg-red-700 text-white rounded-full transition-all duration-300"
-            size="lg"
-          >
-            <motion.span whileHover={{ x: 5 }} className="flex items-center justify-center space-x-2">
-              <ShoppingCart className="h-4 w-4" />
-              <span>Add to Cart</span>
-            </motion.span>
-          </Button>
-        </motion.div>
-      </div>
-    </motion.div>
-  )
+        </div>
+      </main>
+      <Footer />
+    </div>
+  );
 }

@@ -2,12 +2,14 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { ChevronLeft, ChevronRight, Heart } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { products } from "@/lib/mock-data"
 
 export function NewArrivals() {
+  const router = useRouter()
   const [currentIndex, setCurrentIndex] = useState(0)
   const [selectedCategory, setSelectedCategory] = useState("all")
   const [minPrice, setMinPrice] = useState(0)
@@ -55,6 +57,10 @@ export function NewArrivals() {
     setCurrentIndex((prev) => (prev - itemsPerPage < 0 ? maxIndex : prev - itemsPerPage))
   }
 
+  const handleCardClick = (productId: string) => {
+    router.push(`/products/${productId}`)
+  }
+
   const visibleArrivals = filteredArrivals.slice(currentIndex, currentIndex + itemsPerPage)
 
   return (
@@ -100,17 +106,27 @@ export function NewArrivals() {
             style={{ transform: `translateX(-${(currentIndex / itemsPerPage) * 100}%)` }}
           >
             {filteredArrivals.map((product) => (
-              <div key={product.id} className={`w-full ${itemsPerPage > 1 ? "md:w-1/4" : "w-full"} flex-shrink-0 px-2`}>
+              <div 
+                key={product.id} 
+                className={`w-full ${itemsPerPage > 1 ? "md:w-1/4" : "w-full"} flex-shrink-0 px-2`}
+                onClick={() => handleCardClick(product.id)}
+              >
                 <Card className="group cursor-pointer overflow-hidden hover:shadow-lg transition-shadow duration-300">
                   <div className="relative overflow-hidden">
-                    <Link href={`/products/${product.id}`}>
-                      <img
-                        src={product.images[0] || "/placeholder.svg"}
-                        alt={product.name}
-                        className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </Link>
-                    <Button variant="ghost" size="icon" className="absolute top-4 right-4 bg-white/80 hover:bg-white">
+                    <img
+                      src={product.images[0] || "/placeholder.svg"}
+                      alt={product.name}
+                      className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      className="absolute top-4 right-4 bg-white/80 hover:bg-white"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        // Add to wishlist logic here
+                      }}
+                    >
                       <Heart className="h-4 w-4" />
                     </Button>
                     {product.isNew && (
@@ -120,17 +136,15 @@ export function NewArrivals() {
                     )}
                   </div>
                   <CardContent className="p-4">
-                    <Link href={`/products/${product.id}`}>
-                      <h3 className="font-semibold text-gray-900 mb-2 hover:text-gray-700 transition-colors">
-                        {product.name}
-                      </h3>
-                    </Link>
+                    <h3 className="font-semibold text-gray-900 mb-2 hover:text-gray-700 transition-colors">
+                      {product.name}
+                    </h3>
                     <p className="text-gray-600 text-sm mb-2">{product.category}</p>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-2">
-                        <span className="text-lg font-bold text-gray-900">{product.price}</span>
+                        <span className="text-lg font-bold text-gray-900">₹{product.price.toLocaleString()}</span>
                         {product.originalPrice && (
-                          <span className="text-sm text-gray-500 line-through">{product.originalPrice}</span>
+                          <span className="text-sm text-gray-500 line-through">₹{product.originalPrice.toLocaleString()}</span>
                         )}
                       </div>
                     </div>
