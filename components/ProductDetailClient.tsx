@@ -4,7 +4,8 @@ import { useState } from "react";
 import { Star, Heart, Minus, Plus, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import { toast } from "react-hot-toast";
-import { useCart } from "@/hooks/use-cart"; // ✅ use correct import path
+import { useCart } from "@/hooks/use-cart"; 
+import { useRouter } from "next/navigation"; 
 
 interface Product {
   id: string;
@@ -24,6 +25,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
   const [quantity, setQuantity] = useState<number>(1);
   const [selectedImage, setSelectedImage] = useState<string>(product.images[0]);
   const { addItem } = useCart();
+  const router = useRouter(); // 
 
   const discount = product.originalPrice
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
@@ -40,11 +42,16 @@ export default function ProductDetailClient({ product }: { product: Product }) {
       name: product.name,
       price: product.price,
       image: product.images[0],
-      quantity: quantity, // ✅ pass actual quantity
+      quantity,
     };
 
     addItem(cartItem);
     toast.success(`${quantity} × ${product.name} added to cart`);
+  };
+
+  const handleBuyNow = () => {
+    handleAddToCart(); // First add to cart
+   router.push("/checkout"); // Navigate to success page
   };
 
   return (
@@ -158,18 +165,26 @@ export default function ProductDetailClient({ product }: { product: Product }) {
             </div>
           </div>
 
-          <div className="flex gap-4">
+          <div className="flex flex-col sm:flex-row gap-4">
             <button
               onClick={handleAddToCart}
               className="flex-1 bg-black text-white py-3 px-6 font-medium hover:bg-gray-800 transition flex items-center justify-center gap-2"
             >
               <ShoppingCart size={20} />
-              <span>ADD TO CART</span>
+              <span>Add to Cart</span>
             </button>
-            <button className="p-3 border border-gray-300 hover:bg-gray-50 transition">
-              <Heart size={20} />
+
+            <button
+              onClick={handleBuyNow}
+              className="flex-1 bg-green-600 text-white py-3 px-6 font-medium hover:bg-green-700 transition"
+            >
+              Buy Now
             </button>
           </div>
+
+          <button className="p-3 border border-gray-300 hover:bg-gray-50 transition w-full sm:w-auto">
+            <Heart size={20} />
+          </button>
         </div>
       </div>
     </div>
